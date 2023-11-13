@@ -32,9 +32,5 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload
 
 FROM base as test
 
-RUN --mount=type=cache,target=/root/.cache pip3 install -r /build/requirements.txt
-COPY --chown=user:user ./$PROJECT /build/$PROJECT
-RUN mkdir /build/.mypy_cache && chown -R user:user /build/.mypy_cache
-
 # Default target.
 FROM dev
