@@ -1,4 +1,6 @@
-FROM nginx/unit:1.28.0-python3.10
+FROM nginx/unit:1.28.0-python3.10 as base
+
+ARG PROJECT=app
 
 # Nginx Setting
 
@@ -8,7 +10,7 @@ COPY ./config/config.json /docker-entrypoint.d/config.json
 
 RUN mkdir build
 
-# We copy our app folder to the /build
+# Copy the app folder to the /build
 
 COPY . ./build
 
@@ -21,3 +23,15 @@ RUN apt update && apt install -y python3-pip                                  \
 # Instruction informs Docker that the container listens on port 8000
 
 EXPOSE 8000
+
+FROM base as dev
+
+COPY --chown=user:user ./$PROJECT /build/$PROJECT
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+FROM base as test
+
+RUN --mount=type=cache,target=/root/.cache pip3 install -r /build/requirements.txt --with dev
+COPY --chown=user:user ./$PROJECT /build/$PROJECT
+RUN mkdir /build/.mypy_cache && chown -R user:user /build/.mypy_cache

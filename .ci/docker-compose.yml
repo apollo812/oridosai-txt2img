@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  unit:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: test
+    volumes:
+      - ../app:/build/app
+
+  integration:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: test
+    volumes:
+      - ../app:/build/app
