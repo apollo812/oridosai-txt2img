@@ -23,14 +23,3 @@ RUN apt update && apt install -y python3-pip                                  \
 # Instruction informs Docker that the container listens on port 8000
 
 EXPOSE 8000
-
-FROM base as dev
-
-COPY --chown=user:user ./$PROJECT /build/$PROJECT
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
-
-FROM base as test
-
-# Default target.
-FROM dev

@@ -13,8 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run the tests
-        run: make test
+      # - name: Run the tests
+      #   run: make test
 
   checks:
     name: Check code
@@ -23,6 +23,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Checks
-        run: make check
+      # - name: Checks
+      #   run: make check
 

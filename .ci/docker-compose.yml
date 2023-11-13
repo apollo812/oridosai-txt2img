@@ -5,7 +5,6 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-      target: test
     volumes:
       - ../app:/build/app
 
@@ -13,6 +12,5 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-      target: test
     volumes:
       - ../app:/build/app
