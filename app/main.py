@@ -11,13 +11,15 @@ sys.path.append(project_root)
 sys.path.append(current_script_directory)
 
 from fastapi import FastAPI
+from starlette.responses import RedirectResponse
+from starlette.status import HTTP_201_CREATED
 
 app = FastAPI()
 
 
 @app.get("/")
 async def root():
-    return {"Nginx": "I'm alive"}
+    return RedirectResponse(app.docs_url)
 
 @app.post("/txt2img", status_code=HTTP_201_CREATED)
 async def t2i(prompt: str):
