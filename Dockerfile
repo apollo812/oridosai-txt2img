@@ -6,6 +6,9 @@ ARG PROJECT=app
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
+# Install necessary system libraries
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
 # Create folder named build for our app.
 
 RUN mkdir build
