@@ -10,7 +10,7 @@ project_root = os.path.abspath(os.path.join(current_script_directory, os.pardir)
 sys.path.append(project_root)
 sys.path.append(current_script_directory)
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from starlette.responses import RedirectResponse
 from starlette.status import HTTP_201_CREATED
 from scripts.txt2img import txt2img
