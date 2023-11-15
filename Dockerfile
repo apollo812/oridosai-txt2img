@@ -3,7 +3,10 @@ FROM nginx/unit:1.28.0-python3.10 as base
 ARG PROJECT=app
 
 # Install necessary system libraries
-RUN apt-get update && apt-get install -y libgl1-mesa-glx
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    python3-pip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
 RUN useradd -ms /bin/bash user
@@ -19,26 +22,17 @@ USER user
 
 # Create directory and set permissions
 RUN mkdir -p /app/.cache/huggingface && \
-    chmod -R 777 /app/.cache/huggingface
+    chmod -R 755 /app/.cache/huggingface
 
 # Nginx Setting
-
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
-# Create folder named build for our app.
+# Copy the app folder to the /app
+COPY . /app
 
-RUN mkdir build
+# Install Python dependencies
+RUN pip3 install --no-cache-dir -r /app/requirements.txt && \
+    rm -rf /app/.cache/pip/*
 
-# Copy the app folder to the /build
-
-COPY . ./build
-
-RUN /bin/sh -c apt update && apt install -y python3-pip                                  \
-    && pip3 install -r /build/requirements.txt                               \
-    && apt remove -y python3-pip                                              \
-    && apt autoremove --purge -y                                              \
-    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
-
-# Instruction informs Docker that the container listens on port 8000
-
+# Expose port
 EXPOSE 8000
