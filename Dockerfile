@@ -4,15 +4,15 @@ FROM nginx/unit:1.28.0-python3.10
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
-ENV HF_HOME="/app/cache/hf_cache_home" \
-    TRANSFORMERS_CACHE="/app/cache/transformers"
-
-RUN mkdir -p /app/cache/hf_cache_home/token && \
-    chmod -R 777 /app/cache/hf_cache_home/token
+ENV HF_HOME="/build/cache/hf_cache_home" \
+    TRANSFORMERS_CACHE="/build/cache/transformers"
 
 # Create folder named build for our app.
 
 RUN mkdir build
+
+RUN mkdir -p /build/cache/hf_cache_home/token && \
+    chmod -R 777 /build/cache/hf_cache_home/token
 
 # We copy our app folder to the /build
 
