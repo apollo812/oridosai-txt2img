@@ -15,7 +15,7 @@ RUN groupadd --gid 1000 user && adduser --disabled-password --gecos '' --uid 100
 USER user
 
 # Set the working directory
-WORKDIR /build
+RUN mkdir build
 
 # Nginx Setting
 COPY ./config/config.json /docker-entrypoint.d/config.json
