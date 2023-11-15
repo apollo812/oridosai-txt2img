@@ -4,6 +4,8 @@ FROM nginx/unit:1.28.0-python3.10
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
+ENV HF_HOME="/root/cache/hf_cache_home"
+
 # Create folder named build for our app.
 
 RUN mkdir build
@@ -12,10 +14,6 @@ RUN mkdir build
 
 COPY . ./build
 
-# Create directory and set permissions
-RUN mkdir -p /root/.cache/huggingface && \
-    chmod -R 777 /root/.cache/huggingface
-    
 RUN apt update && apt install -y libgl1-mesa-glx python3-pip                                  \
     && pip3 install -r /build/requirements.txt                               \
     && apt remove -y python3-pip                                              \
