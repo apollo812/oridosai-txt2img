@@ -4,8 +4,8 @@ FROM nginx/unit:1.28.0-python3.10
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
-ENV HF_HOME="/build/cache/hf_cache_home" \
-    TRANSFORMERS_CACHE="/build/cache/transformers"
+ENV HF_HOME="/app/cache/hf_cache_home" \
+    TRANSFORMERS_CACHE="/app/cache/transformers"
 
 # Create folder named build for our app.
 
@@ -15,8 +15,8 @@ RUN mkdir build
 
 COPY . ./build
 
-RUN mkdir -p /build/cache/hf_cache_home/token && \
-    chmod -R 777 /build/cache/hf_cache_home/token
+RUN mkdir -p /app/cache/hf_cache_home/token && \
+    chmod -R 777 /app/cache/hf_cache_home/token
 
 RUN apt update && apt install -y libgl1-mesa-glx python3-pip                                  \
     && pip3 install -r /build/requirements.txt                               \
