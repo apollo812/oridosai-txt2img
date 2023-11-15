@@ -2,13 +2,21 @@ FROM nginx/unit:1.28.0-python3.10 as base
 
 ARG PROJECT=app
 
-# Create a non-root user to run the app with.
-RUN groupadd --gid 1000 user &&  adduser --disabled-password --gecos '' --uid 1000 --gid 1000 user
+# Create a non-root user
+RUN useradd -ms /bin/bash user
+
+# Set the working directory
+WORKDIR /app
+
+# Change ownership of the working directory to the non-root user
+RUN chown -R user /app
+
+# Switch to the non-root user
 USER user
 
 # Create directory and set permissions
-RUN mkdir -p /root/.cache/huggingface && \
-    chmod -R 777 /root/.cache/huggingface
+RUN mkdir -p /app/.cache/huggingface && \
+    chmod -R 777 /app/.cache/huggingface
 
 # Nginx Setting
 
