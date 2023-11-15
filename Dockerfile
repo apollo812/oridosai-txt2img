@@ -13,7 +13,7 @@ USER user
 WORKDIR /home/user
 
 # Install necessary system libraries
-RUN apt-get update && apt-get install -y \
+RUN --mount=type=cache,target=/root/.cache apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     python3-pip && \
     rm -rf /var/lib/apt/lists/*
@@ -23,16 +23,12 @@ ENV \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=true
 
-COPY --chown=user:user ./config/config.json ./
-RUN --mount=type=cache,target=/root/.cache 
-
-
 # # Create directory and set permissions
 # RUN mkdir -p /app/.cache/huggingface && \
 #     chmod -R 755 /app/.cache/huggingface
 
 # Nginx Setting
-COPY ./config/config.json /docker-entrypoint.d/config.json
+COPY --chown=user:user ./config/config.json /docker-entrypoint.d/config.json
 
 # Copy the app folder to the /app
 COPY . /home/user
