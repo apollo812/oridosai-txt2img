@@ -10,7 +10,7 @@
             "type": "python 3.10",
             "path": "/build",
             "module": "api.main",
-            "callable": "api"
+            "callable": "app"
         }
     }
 }
