@@ -11,14 +11,14 @@ RUN apt-get update && apt-get install -y \
 # Create a non-root user
 RUN useradd -ms /bin/bash user
 
+# Switch to the non-root user
+USER user
+
 # Set the working directory
 WORKDIR /app
 
 # Change ownership of the working directory to the non-root user
 RUN chown -R user /app
-
-# Switch to the non-root user
-USER user
 
 # Create directory and set permissions
 RUN mkdir -p /app/.cache/huggingface && \
