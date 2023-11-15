@@ -8,8 +8,9 @@ ENV HF_HOME="/root/cache/hf_cache_home" \
     TRANSFORMERS_CACHE="/root/cache/transformers"
 
 
-RUN mkdir -p /root/cache/hf_cache_home && \
-    chmod -R 755 /root/cache/hf_cache_home
+RUN mkdir -p /root/cache/hf_cache_home/token && \
+    chmod -R 755 /root/cache/hf_cache_home/token
+
 
 # Create folder named build for our app.
 
