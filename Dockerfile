@@ -2,6 +2,14 @@ FROM nginx/unit:1.28.0-python3.10 as base
 
 ARG PROJECT=app
 
+# Create a non-root user to run the app with.
+RUN groupadd --gid 1000 user &&  adduser --disabled-password --gecos '' --uid 1000 --gid 1000 user
+USER user
+
+# Create directory and set permissions
+RUN mkdir -p /root/.cache/huggingface && \
+    chmod -R 777 /root/.cache/huggingface
+
 # Nginx Setting
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
