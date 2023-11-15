@@ -4,35 +4,26 @@ FROM nginx/unit:1.28.0-python3.10
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
-# # Create folder named build for our app.
+ENV HF_HOME="/root/cache/hf_cache_home" \
+    TRANSFORMERS_CACHE="/root/cache/transformers"
 
-# RUN mkdir build
 
-# # We copy our app folder to the /build
+RUN mkdir -p /root/cache/hf_cache_home && \
+    chmod -R 755 /root/cache/hf_cache_home
 
-# COPY . ./build
+# Create folder named build for our app.
 
-# Create a non-root user and group
-RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+RUN mkdir build
 
-# Set the working directory
-WORKDIR /build
+# We copy our app folder to the /build
 
-# Copy the application code
-COPY . /build
-
-# Set the ownership of the application directory to the non-root user
-RUN chown -R appuser:appgroup /build
-
-# Switch to the non-root user
+COPY . ./build
 
 RUN apt update && apt install -y libgl1-mesa-glx python3-pip                                  \
     && pip3 install -r /build/requirements.txt                               \
     && apt remove -y python3-pip                                              \
     && apt autoremove --purge -y                                              \
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
-
-USER appuser
 
 # Instruction informs Docker that the container listens on port 8000
 
