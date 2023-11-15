@@ -8,7 +8,7 @@
     "applications": {
         "fastapi": {
             "type": "python 3.10",
-            "path": "/build",
+            "path": "/home/user",
             "module": "api.main",
             "callable": "app"
         }
