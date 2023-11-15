@@ -36,4 +36,4 @@ RUN pip3 install --no-cache-dir -r /app/requirements.txt && \
     rm -rf /app/.cache/pip/*
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8080
