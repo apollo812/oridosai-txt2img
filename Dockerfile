@@ -2,6 +2,9 @@ FROM nginx/unit:1.28.0-python3.10 as base
 
 ARG PROJECT=app
 
+# Install necessary system libraries
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
 # Create a non-root user
 RUN useradd -ms /bin/bash user
 
@@ -21,9 +24,6 @@ RUN mkdir -p /app/.cache/huggingface && \
 # Nginx Setting
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
-
-# Install necessary system libraries
-RUN apt-get update && apt-get install -y libgl1-mesa-glx
 
 # Create folder named build for our app.
 
