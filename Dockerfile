@@ -19,7 +19,7 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 WORKDIR /build
 
 # Copy the application code
-COPY . ./build
+COPY . /build
 
 # Set the ownership of the application directory to the non-root user
 RUN chown -R appuser:appgroup /build
