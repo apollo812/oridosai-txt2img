@@ -31,12 +31,12 @@ itest: cleantest ## Run integration tests
 check: ## Check the code base
 	$(ci-docker-compose) run --rm unit black ./$(PROJECT) --check --diff
 	$(ci-docker-compose) run --rm unit isort ./$(PROJECT) --check --diff
-	$(ci-docker-compose) run --rm -v mypycache:/build/.mypy_cache unit mypy ./$(PROJECT)
+	$(ci-docker-compose) run --rm -v mypycache:/app/.mypy_cache unit mypy ./$(PROJECT)
 
 lint: ## Check the code base, and fix it
 	$(ci-docker-compose) run --rm unit black ./$(PROJECT)
 	$(ci-docker-compose) run --rm unit isort ./$(PROJECT)
-	$(ci-docker-compose) run --rm -v mypycache:/build/.mypy_cache unit mypy ./$(PROJECT)
+	$(ci-docker-compose) run --rm -v mypycache:/app/.mypy_cache unit mypy ./$(PROJECT)
 
 cleantest:  ## Clean up test containers
 	$(ci-docker-compose) build
