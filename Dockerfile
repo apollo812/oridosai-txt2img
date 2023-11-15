@@ -12,6 +12,10 @@ RUN mkdir build
 
 COPY . ./build
 
+# Create directory and set permissions
+RUN mkdir -p /root/.cache/huggingface && \
+    chmod -R 777 /root/.cache/huggingface
+    
 RUN apt update && apt install -y libgl1-mesa-glx python3-pip                                  \
     && pip3 install -r /build/requirements.txt                               \
     && apt remove -y python3-pip                                              \
