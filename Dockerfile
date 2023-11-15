@@ -13,16 +13,16 @@ COPY ./config/config.json /docker-entrypoint.d/config.json
 # That means we only have to copy our config.json file to the folder
 # /docker-entrypoint.d/
 
-RUN mkdir /home/user
+RUN mkdir /build
 
 # We create folder named build for our app.
 
-COPY . ./home/user
+COPY . ./build
 
 # We copy our app folder to the /build
 
 RUN apt update && apt install -y python3-pip                                  \
-    && pip3 install -r /home/user/requirements.txt                               \
+    && pip3 install -r /build/requirements.txt                               \
     && apt remove -y python3-pip                                              \
     && apt autoremove --purge -y                                              \
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
