@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
-RUN useradd -ms /bin/bash user
+# RUN useradd -ms /bin/bash user
+RUN groupadd --gid 1000 user &&  adduser --disabled-password --gecos '' --uid 1000 --gid 1000 user
 
 # Switch to the non-root user
 USER user
