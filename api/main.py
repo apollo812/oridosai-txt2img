@@ -22,13 +22,13 @@ app = FastAPI()
 async def root():
     return RedirectResponse(app.docs_url)
 
-@app.post("/txt2img", status_code=HTTP_201_CREATED)
-async def t2i(prompt: str):
-    result = txt2img(prompt)
-    result.save("output.png")
+# @app.post("/txt2img", status_code=HTTP_201_CREATED)
+# async def t2i(prompt: str):
+#     result = txt2img(prompt)
+#     result.save("output.png")
 
-    # Return the image file as the response content
-    with open("output.png", "rb") as f:
-        file_content = f.read()
+#     # Return the image file as the response content
+#     with open("output.png", "rb") as f:
+#         file_content = f.read()
 
-    return Response(content=file_content, media_type="image/png")
+#     return Response(content=file_content, media_type="image/png")
