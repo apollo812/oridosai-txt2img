@@ -9,8 +9,8 @@
         "fastapi": {
             "type": "python 3.10",
             "path": "/build",
-            "module": "app.main",
-            "callable": "app"
+            "module": "api.main",
+            "callable": "api"
         }
     }
 }

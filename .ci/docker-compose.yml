@@ -6,11 +6,11 @@ services:
       context: ..
       dockerfile: Dockerfile
     volumes:
-      - ../app:/app/app
+      - ../api:/home/user/api
 
   integration:
     build:
       context: ..
       dockerfile: Dockerfile
     volumes:
-      - ../app:/app/app
+      - ../api:/home/user/api
