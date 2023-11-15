@@ -7,11 +7,6 @@ COPY ./config/config.json /docker-entrypoint.d/config.json
 ENV HF_HOME="/build/cache/hf_cache_home" \
     TRANSFORMERS_CACHE="/build/cache/transformers"
 
-
-RUN mkdir -p /build/cache/hf_cache_home/token && \
-    chmod -R 777 /build/cache/hf_cache_home/token
-
-
 # Create folder named build for our app.
 
 RUN mkdir build
@@ -19,6 +14,9 @@ RUN mkdir build
 # We copy our app folder to the /build
 
 COPY . ./build
+
+RUN mkdir -p /build/cache/hf_cache_home/token && \
+    chmod -R 777 /build/cache/hf_cache_home/token
 
 RUN apt update && apt install -y libgl1-mesa-glx python3-pip                                  \
     && pip3 install -r /build/requirements.txt                               \
