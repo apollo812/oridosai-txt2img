@@ -25,13 +25,14 @@ COPY . ./build
 RUN chown -R appuser:appgroup /build
 
 # Switch to the non-root user
-USER appuser
 
 RUN apt update && apt install -y libgl1-mesa-glx python3-pip                                  \
     && pip3 install -r /build/requirements.txt                               \
     && apt remove -y python3-pip                                              \
     && apt autoremove --purge -y                                              \
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
+
+USER appuser
 
 # Instruction informs Docker that the container listens on port 8000
 
