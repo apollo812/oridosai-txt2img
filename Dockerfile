@@ -4,7 +4,8 @@ FROM nginx/unit:1.28.0-python3.10
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
-ENV HF_HOME="/root/cache/hf_cache_home"
+ENV HF_HOME="/root/cache/hf_cache_home" \
+    TRANSFORMERS_CACHE="./cache/"
 
 # Create folder named build for our app.
 
