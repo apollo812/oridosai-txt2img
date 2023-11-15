@@ -4,13 +4,28 @@ FROM nginx/unit:1.28.0-python3.10
 
 COPY ./config/config.json /docker-entrypoint.d/config.json
 
-# Create folder named build for our app.
+# # Create folder named build for our app.
 
-RUN mkdir build
+# RUN mkdir build
 
-# We copy our app folder to the /build
+# # We copy our app folder to the /build
 
+# COPY . ./build
+
+# Create a non-root user and group
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+
+# Set the working directory
+WORKDIR /build
+
+# Copy the application code
 COPY . ./build
+
+# Set the ownership of the application directory to the non-root user
+RUN chown -R appuser:appgroup /build
+
+# Switch to the non-root user
+USER appuser
 
 RUN apt update && apt install -y libgl1-mesa-glx python3-pip                                  \
     && pip3 install -r /build/requirements.txt                               \
