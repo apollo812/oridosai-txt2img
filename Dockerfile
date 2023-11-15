@@ -15,13 +15,13 @@ RUN groupadd --gid 1000 user && adduser --disabled-password --gecos '' --uid 100
 USER user
 
 # Set the working directory
-RUN mkdir build
+WORKDIR /build
 
 # Nginx Setting
-COPY ./config/config.json /docker-entrypoint.d/config.json
+COPY --chown=user:user ./config/config.json /docker-entrypoint.d/config.json
 
 # Copy the app folder to /build
-COPY . /build
+COPY --chown=user:user . /build
 
 # Install Python dependencies
 RUN pip3 install --no-cache-dir -r /build/requirements.txt && \
