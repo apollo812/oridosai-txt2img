@@ -11,7 +11,7 @@ def load_sdxl_base_model(model_type, model_load_type):
 
     if model_load_type == "pretrained":
         pipeline = StableDiffusionXLPipeline.from_pretrained(
-            model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+            model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True, cache_dir='/build'
         ).to("cuda")
     elif model_load_type == "single":
         pipeline = StableDiffusionXLPipeline.from_single_file(
